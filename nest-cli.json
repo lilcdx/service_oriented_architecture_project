@@ -1,0 +1,48 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/bingo/src",
+  "monorepo": true,
+  "root": "apps/bingo",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/bingo/tsconfig.app.json"
+  },
+  "projects": {
+    "bingo": {
+      "type": "application",
+      "root": "apps/bingo",
+      "entryFile": "main",
+      "sourceRoot": "apps/bingo/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/bingo/tsconfig.app.json"
+      }
+    },
+    "bingo-check": {
+      "type": "application",
+      "root": "apps/bingo-check",
+      "entryFile": "main",
+      "sourceRoot": "apps/bingo-check/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/bingo-check/tsconfig.app.json"
+      }
+    },
+    "auth": {
+      "type": "application",
+      "root": "apps/auth",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth/tsconfig.app.json"
+      }
+    },
+    "common": {
+      "type": "library",
+      "root": "libs/common",
+      "entryFile": "index",
+      "sourceRoot": "libs/common/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    }
+  }
+}

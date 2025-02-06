@@ -1,0 +1,68 @@
+services:
+  bingo:
+    build:
+      context: .
+      dockerfile: ./apps/bingo/Dockerfile
+      target: development
+    command: npm run start:dev bingo
+    env_file:
+      - ./apps/bingo/.env
+    depends_on:
+      - mongodb
+      - bingo-check
+      - auth
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+  bingo-check:
+    build:
+      context: .
+      dockerfile: ./apps/bingo-check/Dockerfile
+      target: development
+    command: npm run start:dev bingo-check
+    env_file:
+      - ./apps/bingo-check/.env
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - auth
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: npm run start:dev auth
+    ports:
+      - '3001:3001'
+    env_file:
+      - ./apps/auth/.env
+    depends_on:
+      - mongodb
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - 'mongodb_master_data:/data/db'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+volumes:
+  mongodb_master_data:
+    driver: local

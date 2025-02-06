@@ -1,0 +1,1 @@
+export const BINGO_CHECK_SERVICE = 'BINGO_CHECK';
