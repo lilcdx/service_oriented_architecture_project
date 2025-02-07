@@ -31,3 +31,10 @@
   </select>
   <button (click)="createBingo()">Create Bingo</button>
 </ng-template>
+
+<div *ngIf="notifications.length">
+  <h3>Notifications:</h3>
+  <ul>
+    <li *ngFor="let message of notifications">{{ message }}</li>
+  </ul>
+</div>

@@ -1,12 +1,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { BingoService } from '../bingo.service'; // Adjust path if necessary
+import { BingoService } from '../bingo.service'; 
 import { BingoBoard } from '../bingo-board.model';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
+// import { WebSocketService } from '@ng-mf/data-access-user'; 
 
 @Component({
   selector: 'app-bingo',
   templateUrl: './bingo.component.html',
+  standalone: true,
   styleUrls: ['./bingo.component.css'],
   imports: [CommonModule, FormsModule],
   encapsulation: ViewEncapsulation.None,
@@ -14,12 +17,30 @@ import { FormsModule } from '@angular/forms';
 export class BingoComponent implements OnInit {
   bingoBoard: BingoBoard | null = null;
   isLocked: boolean = false; 
-  selectedSize: string = '3x3';
+  selectedSize: string = '3x3'; 
+  public notifications: string[] = [];
+  private messageSubscription!: Subscription;
 
-  constructor(private bingoService: BingoService) {}
+  constructor(
+    private bingoService: BingoService,     
+    // private webSocketService: WebSocketService,
+  ) {}
 
   ngOnInit(): void {
     this.fetchBingoBoard();
+    const userId = localStorage.getItem('userId'); // ✅ Retrieve stored user ID
+
+  //   if (userId) {
+  //     // Connect to the WebSocket server with the userId
+  //     this.webSocketService.connectUser(userId);
+
+  //     // Subscribe to incoming WebSocket messages (notifications)
+  //     this.messageSubscription = this.webSocketService.onMessage().subscribe((message: string) => {
+  //       console.log('🔔 Notification received:', message);
+  //       this.notifications.push(message);  // Add message to the list
+  //     });
+    
+  // }
   }
 
   fetchBingoBoard() {
@@ -75,6 +96,13 @@ export class BingoComponent implements OnInit {
           this.fetchBingoBoard();
         });
       }
+    }
+  }
+
+  ngOnDestroy() {
+    // Unsubscribe from WebSocket messages when the component is destroyed
+    if (this.messageSubscription) {
+      this.messageSubscription.unsubscribe();
     }
   }
 }

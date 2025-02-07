@@ -8,50 +8,33 @@ import { inject } from '@angular/core';
   standalone: true,
   imports: [CommonModule, FormsModule],
   selector: 'ng-mf-login-entry',
-  template: `
-    <div class="login-app">
-      <form class="login-form" (ngSubmit)="login()">
-        <label>
-          Username:
-          <input type="text" name="username" [(ngModel)]="username" />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" [(ngModel)]="password" />
-        </label>
-        <button type="submit">Login</button>
-      </form>
-      <div *ngIf="isLoggedIn$ | async">User is logged in!</div>
-    </div>
-  `,
-  styles: [
-    `
-      .login-app {
-        width: 30vw;
-        border: 2px dashed black;
-        padding: 8px;
-        margin: 0 auto;
-      }
-      .login-form {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 8px;
-      }
-      label {
-        display: block;
-      }
-    `,
-  ],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class RemoteEntryComponent {
   private userService = inject(UserService);
   username = '';
   password = '';
+  isSignUpMode = false;
   isLoggedIn$ = this.userService.isUserLoggedIn$;
 
   login() {
     this.userService.login(this.username, this.password);
+  }
+
+  createAccount() {
+    this.userService.createUser(this.username, this.password ).subscribe({
+      next: (response) => {
+        console.log('Account created successfully!', response);
+        this.login(); // ✅ Automatically log in after creating the account
+      },
+      error: (err) => {
+        console.error('Account creation failed', err);
+      },
+    });
+  }
+
+  toggleMode() {
+    this.isSignUpMode = !this.isSignUpMode;
   }
 }

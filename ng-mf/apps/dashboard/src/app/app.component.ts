@@ -9,7 +9,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
   imports: [CommonModule, RouterModule],
   selector: 'ng-mf-root',
   template: `
-    <div class="dashboard-nav">Admin Dashboard</div>
+    <div class="dashboard-nav">Bingo 2025</div>
     <div *ngIf="isLoggedIn$ | async; else signIn">
     <router-outlet></router-outlet>
     </div>

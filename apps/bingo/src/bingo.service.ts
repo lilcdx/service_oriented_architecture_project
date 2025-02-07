@@ -135,11 +135,14 @@ async checkCase(userId: string, rowIndex: number, colIndex: number) {
     { userId },
     { $set: { grid: bingo.grid } }, 
   );
-
+  console.log('Emitting case_checked event');
   await lastValueFrom(
     this.bingoCheckClient.emit('case_checked', {
       userId,
       message: `User: ${userId} checked a case`,
+      bingo,
+      rowIndex,
+      colIndex
     }),
   );
 

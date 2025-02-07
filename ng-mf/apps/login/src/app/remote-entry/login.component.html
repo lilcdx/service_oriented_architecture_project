@@ -1,0 +1,23 @@
+<div class="login-app">
+    <form class="login-form" (ngSubmit)="isSignUpMode ? createAccount() : login()">
+      <label>
+        Username:
+        <input type="text" name="username" [(ngModel)]="username" required />
+      </label>
+      <label>
+        Password:
+        <input type="password" name="password" [(ngModel)]="password" required />
+      </label>
+      
+      <button type="submit">
+        {{ isSignUpMode ? 'Create Account' : 'Login' }}
+      </button>
+    </form>
+  
+    <button type="button" (click)="toggleMode()">
+      {{ isSignUpMode ? 'Switch to Login' : 'Switch to Create Account' }}
+    </button>
+  
+    <div *ngIf="isLoggedIn$ | async">User is logged in!</div>
+  </div>
+  

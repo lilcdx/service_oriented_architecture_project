@@ -4,7 +4,6 @@ import * as Joi from 'joi';
 import { BingoCheckController } from './bingo-check.controller';
 import { BingoCheckService } from './bingo-check.service';
 import { ConfigModule } from '@nestjs/config';
-import { WebsocketGateway } from './websocket/websocket.gateway';
 
 
 @Module({
@@ -20,6 +19,6 @@ import { WebsocketGateway } from './websocket/websocket.gateway';
     AuthModule,
   ],
   controllers: [BingoCheckController],
-  providers: [BingoCheckService, WebsocketGateway],
+  providers: [BingoCheckService],
 })
 export class BingoCheckModule {}
