@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { BingoComponent } from './bingo.component';
 
 @Component({
-  imports: [CommonModule, NxWelcomeComponent],
+  imports: [CommonModule, BingoComponent],
   selector: 'ng-mf-bingo-entry',
-  template: `<ng-mf-nx-welcome></ng-mf-nx-welcome>`,
+  template: `<app-bingo></app-bingo>`,
 })
 export class RemoteEntryComponent {}

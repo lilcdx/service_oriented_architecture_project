@@ -1,0 +1,33 @@
+<div *ngIf="bingoBoard else noBingo">
+  <div *ngIf="!isLocked">
+    <p>Bingo board is not locked.</p>
+  </div>
+
+  <div *ngIf="isLocked">
+    <p>Bingo board is locked.</p>
+  </div>
+
+  <div *ngIf="bingoBoard?.grid?.length" class="bingo-grid">
+    <!-- Loop through all cells in the bingo board -->
+    <div *ngFor="let row of bingoBoard.grid; let rowIndex = index">
+      <div *ngFor="let cell of row; let colIndex = index"
+           class="bingo-cell"
+           [class.checked]="cell.isValid"
+           (click)="onCellClick(rowIndex, colIndex, cell.expectedValue)">
+        {{ cell.expectedValue }}
+      </div>
+    </div>
+  </div>
+
+  <button *ngIf="!isLocked" (click)="lockBingo()">Lock Bingo</button>
+</div>
+
+<ng-template #noBingo>
+  <p>No Bingo board found. Please select a size to create one:</p>
+  <select [(ngModel)]="selectedSize">
+    <option value="3x3">3x3</option>
+    <option value="4x4">4x4</option>
+    <option value="5x5">5x5</option>
+  </select>
+  <button (click)="createBingo()">Create Bingo</button>
+</ng-template>

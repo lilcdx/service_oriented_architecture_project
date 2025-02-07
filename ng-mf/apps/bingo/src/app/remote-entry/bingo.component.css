@@ -1,0 +1,41 @@
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px); /* Adjust based on bingo size */
+  gap: 5px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.bingo-row {
+  display: flex;
+}
+
+.bingo-cell {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border: 1px solid #000;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.bingo-cell:hover {
+  background-color: #ddd;
+}
+
+.bingo-cell.checked {
+  background-color: lightgreen;
+  color: white;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
